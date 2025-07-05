@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,12 +25,12 @@ public class BookService {
 
     public BookResponse createBook(BookRequest bookRequest) {
         Book book = new Book();
-        UpdateBookFromRequest(book, bookRequest);
+        updateBookFromRequest(book, bookRequest);
         Book savedBook = bookRepository.save(book);
         return mapToBookResponse(savedBook);
     }
 
-    public void UpdateBookFromRequest(Book book, BookRequest bookRequest) {
+    public void updateBookFromRequest(Book book, BookRequest bookRequest) {
         book.setTitle(bookRequest.getTitle());
         book.setAuthor(bookRequest.getAuthor());
         book.setPublisher(bookRequest.getPublisher());
@@ -54,5 +55,14 @@ public class BookService {
         bookResponse.setPrice(savedBook.getPrice());
 
         return bookResponse;
+    }
+
+    public Optional<BookResponse> updateBook(Long id, BookRequest bookRequest) {
+        return bookRepository.findById(id)
+                .map(existingBook -> {
+                    updateBookFromRequest(existingBook, bookRequest);
+                    Book savedBook = bookRepository.save(existingBook);
+                    return mapToBookResponse(savedBook);
+                });
     }
 }

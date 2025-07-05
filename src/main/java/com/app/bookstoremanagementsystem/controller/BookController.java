@@ -28,4 +28,12 @@ public class BookController {
         return new ResponseEntity<BookResponse>(bookService.createBook(bookRequest),
                 HttpStatus.CREATED);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<BookResponse> updateBook(@PathVariable Long id,
+                                                   @RequestBody BookRequest bookRequest) {
+        return bookService.updateBook(id, bookRequest)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }
