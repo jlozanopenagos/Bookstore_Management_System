@@ -23,6 +23,12 @@ public class BookService {
                 .collect(Collectors.toList());
     }
 
+    public List<BookResponse> searchBooks(String keyword) {
+        return bookRepository.searchBooks(keyword).stream()
+                .map(this::mapToBookResponse)
+                .collect(Collectors.toList());
+    }
+
     public BookResponse createBook(BookRequest bookRequest) {
         Book book = new Book();
         updateBookFromRequest(book, bookRequest);
@@ -39,6 +45,7 @@ public class BookService {
         book.setIsbn(bookRequest.getIsbn());
         book.setImageUrl(bookRequest.getImageUrl());
         book.setPrice(bookRequest.getPrice());
+        book.setStockQuantity(bookRequest.getStockQuantity());
     }
 
     public BookResponse mapToBookResponse(Book savedBook) {
@@ -53,6 +60,7 @@ public class BookService {
         bookResponse.setIsbn(savedBook.getIsbn());
         bookResponse.setImageUrl(savedBook.getImageUrl());
         bookResponse.setPrice(savedBook.getPrice());
+        bookResponse.setStockQuantity(savedBook.getStockQuantity());
 
         return bookResponse;
     }

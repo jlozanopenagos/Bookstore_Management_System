@@ -14,5 +14,6 @@ public class BookResponse {
     private String isbn;
     private String imageUrl;
     private BigDecimal price;
+    private Integer stockQuantity;
     private boolean active;
 }

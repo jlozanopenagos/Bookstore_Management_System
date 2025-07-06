@@ -23,6 +23,11 @@ public class BookController {
         return ResponseEntity.ok(bookService.getAllBooks());
     }
 
+    @GetMapping ("/search")
+    public ResponseEntity<List<BookResponse>> searchBook (@RequestParam String keyword) {
+        return ResponseEntity.ok(bookService.searchBooks(keyword));
+    }
+
     @PostMapping
     public ResponseEntity<BookResponse> addBook(@RequestBody BookRequest bookRequest) {
         return new ResponseEntity<BookResponse>(bookService.createBook(bookRequest),

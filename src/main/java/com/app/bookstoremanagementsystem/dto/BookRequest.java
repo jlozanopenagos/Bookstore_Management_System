@@ -14,5 +14,6 @@ public class BookRequest {
     private String isbn;
     private String imageUrl;
     private BigDecimal price;
+    private Integer stockQuantity;
 
 }
