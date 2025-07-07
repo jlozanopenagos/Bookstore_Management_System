@@ -41,4 +41,10 @@ public class BookController {
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
+        boolean deleted = bookService.deleteBook(id);
+        return deleted ? ResponseEntity.noContent().build(): ResponseEntity.notFound().build();
+    }
 }

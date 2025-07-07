@@ -4,8 +4,8 @@ import com.app.bookstoremanagementsystem.dto.BookRequest;
 import com.app.bookstoremanagementsystem.dto.BookResponse;
 import com.app.bookstoremanagementsystem.model.Book;
 import com.app.bookstoremanagementsystem.repositories.BookRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
@@ -72,5 +72,14 @@ public class BookService {
                     Book savedBook = bookRepository.save(existingBook);
                     return mapToBookResponse(savedBook);
                 });
+    }
+
+    public boolean deleteBook(Long id) {
+        return bookRepository.findById(id)
+                .map(book -> {
+                    book.setActive(false);
+                    bookRepository.save(book);
+                    return true;
+                }).orElse(false);
     }
 }
